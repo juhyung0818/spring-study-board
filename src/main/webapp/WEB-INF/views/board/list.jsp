@@ -18,6 +18,7 @@
     <tr>
         <th>글 번호</th>
         <th>제목</th>
+        <th>등록일</th>
         <th>조회수</th>
     </tr>
     </thead>
@@ -25,12 +26,22 @@
     <c:forEach var="board" items="${boards}">
     <tr>
         <td>${board.id}</td>
-        <td>${board.title}</td>
+        <td><a href="/java/boards/${board.id}">${board.title}</a></td>
+        <td>${board.registerDate}</td>
         <td>${board.viewCount}</td>
     </tr>
     </c:forEach>
     </tbody>
 </table>
-</table>
+<button id="new_post">글 작성</button>
+<script src="/resources/js/node_modules/jquery/dist/jquery.js"/>
+<script>
+    $(document).ready(function(){
+        $("#new_post").click(function() {
+            console.log("click");
+            location.href = "/java/boards/new";
+        })
+    });
+</script>
 </body>
 </html>
