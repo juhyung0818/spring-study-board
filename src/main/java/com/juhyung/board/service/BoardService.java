@@ -16,8 +16,17 @@ public class BoardService {
         return boardMapper.selectBoards();
     }
 
-    public void addBoard(final Board board) {
+    public Board getBoard(final int id) {
+        return boardMapper.selectBoard(id);
+    }
+
+    public int registerBoard(final Board board) {
         board.setViewCount(0);
         boardMapper.insertBoard(board);
+        return board.getId();
+    }
+
+    public void removeBoard(final int id) {
+        boardMapper.deleteBoard(id);
     }
 }
