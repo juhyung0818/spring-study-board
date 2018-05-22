@@ -21,9 +21,6 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 	@Value("${spring.resources.static-locations}")
 	private String staticResourceLocation;
 
-	@Value("${spring.file.static-locations}")
-	private String fileLocation;
-
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -42,7 +39,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations(staticResourceLocation);
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
 }
