@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @EnableTransactionManagement
-@MapperScan(basePackages = "com.juhyung.board.mapper", annotationClass = Mapper.class)
+@MapperScan(basePackages = "com.juhyung.board.**.mapper", annotationClass = Mapper.class)
 public class DbConfig {
 	
     @Value("${spring.datasource.driver-class-name}")

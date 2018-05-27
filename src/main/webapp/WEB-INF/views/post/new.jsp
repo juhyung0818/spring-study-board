@@ -11,7 +11,7 @@
     <title>새 게시글 작성</title>
 </head>
 <body>
-    <form action="/java/boards" method="POST">
+    <form action="/java/posts" method="POST">
         <label for="title">title : </label><br>
         <input type="text" id="title" name="title"/>
         <br>

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @PropertySource("classpath:/application.properties")
 @Configuration
-@ComponentScan(basePackages = "com.juhyung.board.service")
+@ComponentScan(basePackages = "com.juhyung.board.**.service")
 @Import({DbConfig.class})
 public class RootApplicationContextConfig {
 }

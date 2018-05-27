@@ -1,4 +1,4 @@
-package com.juhyung.board.model;
+package com.juhyung.board.post.model;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
-public class Board {
+public class Post {
     private int id;
     @NotNull
     private String title;

@@ -1,6 +1,5 @@
 package com.juhyung.board.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +14,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.juhyung.board.controller"})
+@ComponentScan(basePackages = {"com.juhyung.board.**.controller"})
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
-	
-	@Value("${spring.resources.static-locations}")
-	private String staticResourceLocation;
 
 	@Bean
 	public ViewResolver viewResolver() {
