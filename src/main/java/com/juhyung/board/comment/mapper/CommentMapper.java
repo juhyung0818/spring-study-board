@@ -14,7 +14,7 @@ public interface CommentMapper {
             "WHERE post_id = #{id}"})
     List<Comment> selectCommentsByPostId(final int id);
 
-    @Insert({"INSERT INTO comment post_id, content, register_date " +
+    @Insert({"INSERT INTO comment (post_id, content, register_date) " +
             "VALUE (#{postId}, #{content}, NOW())"})
     void insert(final Comment comment);
 }
