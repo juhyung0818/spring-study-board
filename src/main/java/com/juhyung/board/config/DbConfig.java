@@ -1,7 +1,6 @@
 package com.juhyung.board.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @EnableTransactionManagement
-@MapperScan(basePackages = "com.juhyung.board.**.mapper", annotationClass = Mapper.class)
+@MapperScan(basePackages = "com.juhyung.board.**.mapper")
 public class DbConfig {
 	
     @Value("${spring.datasource.driver-class-name}")
