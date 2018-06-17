@@ -26,7 +26,6 @@ public class PostService {
     }
 
     public int registerPost(final Post post) {
-        post.setViewCount(0);
         boardMapper.insert(post);
         return post.getId();
     }
@@ -36,7 +35,7 @@ public class PostService {
     }
 
     public void modifyPost(final Post post) {
-        if(post == null || StringUtils.isAnyBlank(post.getTitle(), post.getContent())){
+        if(post == null || StringUtils.isAnyBlank(post.getText(), post.getWriter())){
             log.error("Post : {}", post.toString());
             throw new IllegalArgumentException();
         }

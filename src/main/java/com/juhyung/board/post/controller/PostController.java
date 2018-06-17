@@ -3,7 +3,9 @@ package com.juhyung.board.post.controller;
 import com.juhyung.board.comment.service.CommentService;
 import com.juhyung.board.post.model.Post;
 import com.juhyung.board.post.service.PostService;
+import javafx.geometry.Pos;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,11 @@ public class PostController {
     public String mainPage(Model model) {
         model.addAttribute("posts", postService.getPosts());
         return "/post/list";
+    }
+
+    @PostMapping("/test")
+    public void test(@RequestBody String msg) {
+        System.out.println(msg);
     }
 
     @GetMapping("/api")

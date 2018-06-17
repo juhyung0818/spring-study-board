@@ -1,18 +1,18 @@
 package com.juhyung.board.post.controller;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 
 @Controller
-@RequestMapping("/files")
+@RequestMapping
 public class FileController {
     private static final String FILE_PATH = "/Users/YJH/Desktop/tracer.png";
     private static final String INLINE = "inline";
@@ -38,5 +38,18 @@ public class FileController {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+
+    @GetMapping("/get")
+    @ResponseBody
+    public String get() {
+        return "get";
+    }
+
+    @PostMapping("/post")
+
+    public String post() {
+        return "redirect:/get";
     }
 }

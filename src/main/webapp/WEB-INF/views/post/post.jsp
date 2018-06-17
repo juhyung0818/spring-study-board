@@ -33,8 +33,18 @@
     </table>
     <input type="hidden" value="${post.id}" name="id"/>
     <input type="submit" value="수정" />
-    <input id="list" type="button" value="목록" />
+    <input id="list" type="button" value="목록"/>
 </form>
+
+<div>
+    <form action="/java/comments" method="POST">
+        <input type="hidden" name="postId" value="${post.id}">
+        <label for="comment"></label>
+        <input type="text" id="comment" name="content"/>
+        <input type="submit" value="등록" />
+    </form>
+</div>
+
 <table border="1" id="comment-table">
     <thead>
         <tr>
@@ -44,6 +54,7 @@
         </tr>
     </thead>
     <tbody>
+    </tr>
     <c:forEach var="comment" items="${comments}">
         <tr>
             <td>${comment.id}</td>

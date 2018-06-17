@@ -9,24 +9,22 @@ import java.util.List;
 public interface PostMapper {
     @Select("SELECT " +
             "id AS id " +
-            ", title AS title " +
-            ", content AS content " +
+            ", writer AS writer " +
+            ", text AS text " +
             ", register_date AS registerDate " +
-            ", view_count AS viewCount " +
             "FROM post")
     List<Post> selectPosts();
 
     @Select({"SELECT " +
             "id AS id " +
-            ", title AS title " +
-            ", content AS content " +
+            ", writer AS writer " +
+            ", text AS text " +
             ", register_date AS registerDate " +
-            ", view_count AS viewCount " +
             " FROM post WHERE id = #{id}"})
     Post selectPost(final int id);
 
-    @Insert({"INSERT INTO post (title, content, register_date, view_count) " +
-            "VALUES (#{title}, #{content}, NOW(), #{viewCount})"})
+    @Insert({"INSERT INTO post (writer, text, register_date, like_count) " +
+            "VALUES (#{writer}, #{text}, NOW(), 0)"})
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(final Post post);
 
@@ -35,13 +33,13 @@ public interface PostMapper {
     void delete(final int id);
 
     @Update({"UPDATE post " +
-            "SET view_count = view_count + 1 " +
+            "SET like_count = like_count + 1 " +
             "WHERE id = #{id}"})
     void updateViewCount(final int id);
 
     @Update({"UPDATE post " +
-            "SET title=#{title} " +
-            ", content = #{content} " +
+            "SET writer = #{writer} " +
+            ", text = #{text} " +
             "WHERE id = #{id}"})
     void updatePost(final Post post);
 }

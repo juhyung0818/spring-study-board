@@ -9,9 +9,13 @@ import java.util.List;
 
 @Mapper
 public interface CommentMapper {
-    @Select({"SELECT id, content, register_date " +
+    @Select({"SELECT " +
+            "id" +
+            ", content" +
+            ", register_date " +
             "FROM comment " +
-            "WHERE post_id = #{id}"})
+            "WHERE post_id = #{id} " +
+            "ORDER BY register_date desc"})
     List<Comment> selectCommentsByPostId(final int id);
 
     @Insert({"INSERT INTO comment (post_id, content, register_date) " +
