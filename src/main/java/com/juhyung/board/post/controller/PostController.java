@@ -3,9 +3,8 @@ package com.juhyung.board.post.controller;
 import com.juhyung.board.comment.service.CommentService;
 import com.juhyung.board.post.model.Post;
 import com.juhyung.board.post.service.PostService;
-import javafx.geometry.Pos;
+import com.juhyung.board.user.model.User;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,7 @@ public class PostController {
 
     @GetMapping
     public String mainPage(Model model) {
-        model.addAttribute("posts", postService.getPosts());
+        model.addAttribute("posts", postService.getPosts(User.get()));
         return "/post/list";
     }
 
@@ -38,7 +37,7 @@ public class PostController {
     @GetMapping("/api")
     @ResponseBody
     public List<Post> getBoards() {
-        return postService.getPosts();
+        return postService.getPosts(User.get());
     }
 
     @GetMapping("/{id}")
@@ -47,7 +46,7 @@ public class PostController {
             return "forward:/java/posts";
         }
         model.addAttribute("post", postService.getPost(id));
-        model.addAttribute("comments", commentService.getCommentsByPostId(id));
+        model.addAttribute("comments", commentService.getComments(id));
         return "/post/post";
     }
 
@@ -80,6 +79,13 @@ public class PostController {
         }
         return "redirect:/java/posts";
     }
+
+    @PutMapping("/{id}/like")
+    @ResponseBody
+    public void modifyLike(@PathVariable int id) {
+        postService.modifyLikeCount(id, User.get());
+    }
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

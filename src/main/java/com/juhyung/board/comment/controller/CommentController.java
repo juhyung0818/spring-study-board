@@ -2,11 +2,11 @@ package com.juhyung.board.comment.controller;
 
 import com.juhyung.board.comment.model.Comment;
 import com.juhyung.board.comment.service.CommentService;
+import com.juhyung.board.user.model.User;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @Controller
@@ -15,12 +15,13 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public String addComment(Comment comment) {
+    @ResponseBody
+    public Comment addComment(@RequestBody Comment comment) {
         if(comment == null){
             throw new IllegalArgumentException();
         }
-        commentService.addComment(comment);
-        return "/java/posts/" + comment.getPostId();
+        commentService.addComment(comment, User.get());
+        return comment;
     }
 
 }

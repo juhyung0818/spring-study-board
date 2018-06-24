@@ -15,4 +15,5 @@ public class Post {
     private String text;
     private LocalDateTime registerDate;
     private long likeCount;
+    private boolean liked;
 }

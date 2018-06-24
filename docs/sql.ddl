@@ -4,3 +4,12 @@ title varchar(200),
 content text,
 view_count INT
 );
+
+CREATE TABLE comment (
+   id int auto_increment primary key,
+  post_id int,
+  user_key int,
+  content varchar(1000),
+  parent int,
+  register_date datetime
+);

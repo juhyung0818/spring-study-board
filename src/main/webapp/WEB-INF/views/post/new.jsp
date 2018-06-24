@@ -11,13 +11,44 @@
     <title>새 게시글 작성</title>
 </head>
 <body>
+<div style="width:60%; margin: 0 auto;">
+    <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
+        <label for="image-upload"></label>
+        <input type="file" name="profile" id="image-upload" value="사진 업로드">
+    </form>
+
+    <div id="images"></div>
+
     <form action="/java/posts" method="POST">
-        <label for="title">title : </label><br>
-        <input type="text" id="title" name="title"/>
-        <br>
-        <label for="content">content : </label> <br>
-        <textarea rows="4" cols="50" id="content" name="content"></textarea>
+        <label for="text">text : </label> <br>
+        <textarea rows="4" cols="50" id="text" name="text"></textarea>
         <input type="submit" value="등록">
     </form>
+</div>
+<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+<script>
+    var sel_files = [];
+    $(document).ready(function() {
+        $("#image-upload").on("change", handleImgsFilesSelect);
+    });
+    function handleImgsFilesSelect(e){
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")){
+                alert("이미지 파일만 가능합니다.");
+                return;
+            }
+            sel_files.push(f);
+            var reader = new FileReader();
+            reader.onload = function(e){
+
+                var img_html = "<img src=" + e.target.result + " width='100px' height='100px'/>";
+                $("#images").append(img_html);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+</script>
 </body>
 </html>

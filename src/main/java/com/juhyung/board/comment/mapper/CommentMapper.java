@@ -10,15 +10,30 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
     @Select({"SELECT " +
-            "id" +
+            "id " +
+            ", post_id" +
+            ", user_key" +
             ", content" +
-            ", register_date " +
+            ", parent" +
+            ", register_date AS registerDate " +
             "FROM comment " +
             "WHERE post_id = #{id} " +
-            "ORDER BY register_date desc"})
-    List<Comment> selectCommentsByPostId(final int id);
+            "AND parent = 0 "})
+    List<Comment> selectComments(final int id);
 
-    @Insert({"INSERT INTO comment (post_id, content, register_date) " +
-            "VALUE (#{postId}, #{content}, NOW())"})
+    @Select({"SELECT " +
+            "id " +
+            ", post_id" +
+            ", user_key" +
+            ", content" +
+            ", parent" +
+            ", register_date AS registerDate " +
+            "FROM comment " +
+            "WHERE post_id = #{id} " +
+            "AND parent <> 0 "})
+    List<Comment> selectChildComments(final int id);
+
+    @Insert({"INSERT INTO comment (post_id, user_key, content, parent, register_date) " +
+            "VALUE (#{postId}, #{userKey}, #{content}, #{parent}, NOW())"})
     void insert(final Comment comment);
 }

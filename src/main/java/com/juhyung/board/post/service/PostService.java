@@ -3,10 +3,12 @@ package com.juhyung.board.post.service;
 
 import com.juhyung.board.post.mapper.PostMapper;
 import com.juhyung.board.post.model.Post;
+import com.juhyung.board.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,24 +16,23 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class PostService {
-    private final PostMapper boardMapper;
+    private final PostMapper postMapper;
 
-    public List<Post> getPosts() {
-        return boardMapper.selectPosts();
+    public List<Post> getPosts(User user) {
+        return postMapper.selectPosts(user.getKey());
     }
 
     public Post getPost(final int id) {
-        boardMapper.updateViewCount(id);
-        return boardMapper.selectPost(id);
+        return postMapper.selectPost(id);
     }
 
     public int registerPost(final Post post) {
-        boardMapper.insert(post);
+        postMapper.insert(post);
         return post.getId();
     }
 
     public void removePost(final int id) {
-        boardMapper.delete(id);
+        postMapper.delete(id);
     }
 
     public void modifyPost(final Post post) {
@@ -39,7 +40,19 @@ public class PostService {
             log.error("Post : {}", post.toString());
             throw new IllegalArgumentException();
         }
-        boardMapper.updatePost(post);
+        postMapper.updatePost(post);
+    }
+
+    public void modifyLikeCount(final int id, final User user) {
+        final int key = user.getKey();
+        boolean liked = postMapper.deleteUserLikePost(id, key) == 0;
+
+        if(liked) {
+            postMapper.updateLikeCount(id);
+            postMapper.insertUserLikePost(id, key);
+            return ;
+        }
+        postMapper.updateUnLikeCount(id);
     }
 
 }

@@ -14,13 +14,12 @@
 <html lang="ko">
 <head>
     <title>Board</title>
-    <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 </head>
 <body>
 <div style="width:60%; margin: 0 auto;">
 <img src="/resources/img/logo-jstagram.png">
     <c:forEach var="post" items="${posts}">
-        <div style="border-style: groove; ">
+        <div style="border-style: groove;" id="${post.id}" class="post-id">
             <div class="simple-profile" style="padding-left: 10px;">
                     ${post.writer}
             </div>
@@ -33,7 +32,8 @@
             <div>
                 <div class="share" style="padding-bottom: 5px">
                     <a href="#" class="like-button">
-                        <img src="/resources/img/like.png" width="32px" height="32px" data-liked=false>
+                        <img ${post.liked ? 'src="/resources/img/liked.png" data-liked=true' : 'src="/resources/img/like.png" data-liked=false'}
+                                width="32px" height="32px" >
                     </a>
                     <a href="#" class="comment-button">
                         <img src="/resources/img/comment.png" width="32px" height="32px">
@@ -43,7 +43,6 @@
                     </div>
                 </div>
                 <div class="text" style="padding-bottom: 5px">${post.text}</div>
-                <div class="comment">진짜 댓글들</div>
                 <div class="date">
                     <p style="color: gray; font-size: small">${post.registerDate}</p>
                 </div>
@@ -55,34 +54,39 @@
 <button id="new_post">글 작성</button>
 </div>
 </body>
+<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script>
     $(document).ready(function(){
         $("#new_post").click(function() {
             console.log("click");
-            location.href = "/java/boards/new";
+            location.href = "/java/posts/new";
         })
     });
 
     $(".like-button").click(function() {
         event.preventDefault();
-        var likeImg = $(this).children("img");
+        var self = $(this);
+        var id = self.closest(".post-id").prop("id");
+        var likeImg = self.children("img");
         var liked = likeImg.data("liked");
-        var likeCount = $(this).closest(".share").find(".like-count");
+        var likeCount = self.closest(".share").find(".like-count");
         var count = parseInt(likeCount.html());
 
-        console.log(count);
+        $.ajax({
+            type : "PUT",
+            url : "/java/posts/" + id + "/like"
+        }).done(function() {
+            if(liked) {
+                likeImg.attr("src", "/resources/img/like.png");
+                likeImg.data("liked", false);
+                likeCount.html(count - 1);
 
-        if(liked) {
-            likeImg.attr("src", "/resources/img/like.png");
-            likeImg.data("liked", false);
-            likeCount.html(count - 1);
-        } else {
-            likeImg.attr("src", "/resources/img/liked.png");
-            likeImg.data("liked", true);
-            likeCount.html(count + 1);
-        }
+            } else {
+                likeImg.attr("src", "/resources/img/liked.png");
+                likeImg.data("liked", true);
+                likeCount.html(count + 1);
+            }
+        });
     })
-
-
 </script>
 </html>
