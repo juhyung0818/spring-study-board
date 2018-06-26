@@ -13,3 +13,14 @@ CREATE TABLE comment (
   parent int,
   register_date datetime
 );
+
+CREATE TABLE image
+(
+  id int auto_increment primary key,
+  post_id int,
+  file_name varchar(1000),
+  saved_file_name varchar(1000),
+  file_size long,
+  content_type varchar(100),
+  deleted int
+);
