@@ -14,6 +14,20 @@ public final class ImageBuilder {
     private ImageBuilder() {
     }
 
+    private ImageBuilder(Image image) {
+        this.id = image.getId();
+        this.postId = image.getPostId();
+        this.fileName = image.getFileName();
+        this.savedFileName = image.getSavedFileName();
+        this.fileSize = image.getFileSize();
+        this.contentType = image.getContentType();
+        this.deleted = image.getDeleted();
+    }
+
+    public static ImageBuilder builder(Image image) {
+        return new ImageBuilder(image);
+    }
+
     public static ImageBuilder builder() {
         return new ImageBuilder();
     }

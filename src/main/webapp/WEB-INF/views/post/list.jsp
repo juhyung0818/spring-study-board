@@ -56,11 +56,9 @@
 </body>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#new_post").click(function() {
-            console.log("click");
-            location.href = "/java/posts/new";
-        })
+    $("#new_post").click(function() {
+        console.log("click");
+        location.href = "/java/posts/new";
     });
 
     $(".like-button").click(function() {
@@ -80,7 +78,6 @@
                 likeImg.attr("src", "/resources/img/like.png");
                 likeImg.data("liked", false);
                 likeCount.html(count - 1);
-
             } else {
                 likeImg.attr("src", "/resources/img/liked.png");
                 likeImg.data("liked", true);
@@ -88,5 +85,12 @@
             }
         });
     })
+
+    $(".comment-button").on("click", function() {
+       event.preventDefault();
+       var id = $(this).closest(".post-id").prop("id");
+       window.location.href = "/java/posts/" + id;
+    });
+
 </script>
 </html>

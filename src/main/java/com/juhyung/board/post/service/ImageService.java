@@ -27,7 +27,7 @@ import java.util.UUID;
 public class ImageService {
     private final ImageMapper imageMapper;
 
-    @Value("${spring.jastgram.file-path-company}")
+    @Value("${spring.jastgram.file-path}")
     private String BASE_DIR;
 
     public void upload(final int postId, final MultipartFile[] files) {
@@ -44,12 +44,11 @@ public class ImageService {
             image = convertFile2Image(file, path);
 
             try (InputStream in = file.getInputStream();
-                 FileOutputStream fos = new FileOutputStream(image.getSavedFileName())) {
-
+                 FileOutputStream out = new FileOutputStream(image.getSavedFileName())) {
                 int readCount;
                 byte[] buffer = new byte[512];
                 while ((readCount = in.read(buffer)) != -1) {
-                    fos.write(buffer, 0, readCount);
+                    out.write(buffer, 0, readCount);
                 }
             } catch (Exception e) {
                 log.error("image : {}, exception : {}", image, e);
@@ -61,9 +60,9 @@ public class ImageService {
 
     private String getPathOrMakeDirectory() {
         String path = getPath();
-        File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs(); //디렉토리 생성
+        File directory = new File(path);
+        if (!directory.exists()) {
+            directory.mkdirs();
         }
         return path;
     }
@@ -96,21 +95,22 @@ public class ImageService {
     public void getImage(HttpServletResponse response, final int imageId) {
         Image image = imageMapper.selectImage(imageId);
 
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline" + "; filename=" + image.getSavedFileName() + ";");
-        response.setHeader(HttpHeaders.TRANSFER_ENCODING, "binary");
-        response.setHeader(HttpHeaders.CONTENT_TYPE, image.getContentType());
-        response.setHeader(HttpHeaders.CONTENT_LENGTH, "" + image.getFileSize());
-
         File readFile = new File(image.getSavedFileName());
         if (!readFile.exists()) { // 파일이 존재하지 않다면
             throw new RuntimeException("file not found");
         }
 
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline" + "; filename=" + image.getSavedFileName() + ";");
+        response.setHeader(HttpHeaders.TRANSFER_ENCODING, "binary");
+        response.setHeader(HttpHeaders.CONTENT_TYPE, image.getContentType());
+        response.setHeader(HttpHeaders.CONTENT_LENGTH, "" + image.getFileSize());
+
         try (FileInputStream fis = new FileInputStream(readFile)) {
             FileCopyUtils.copy(fis, response.getOutputStream());
             response.getOutputStream().flush();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
 }
