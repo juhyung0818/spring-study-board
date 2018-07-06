@@ -2,6 +2,7 @@ package com.juhyung.board.post.controller;
 
 import com.juhyung.board.comment.service.CommentService;
 import com.juhyung.board.post.model.Post;
+import com.juhyung.board.post.service.ImageService;
 import com.juhyung.board.post.service.PostService;
 import com.juhyung.board.user.model.User;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,17 +32,6 @@ public class PostController {
         return "/post/list";
     }
 
-    @PostMapping("/test")
-    public void test(@RequestBody String msg) {
-        System.out.println(msg);
-    }
-
-    @GetMapping("/api")
-    @ResponseBody
-    public List<Post> getBoards() {
-        return postService.getPosts(User.get());
-    }
-
     @GetMapping("/{id}")
     public String getBoard(Model model, @PathVariable int id) {
         if(id <= 0) {
@@ -56,12 +48,8 @@ public class PostController {
     }
 
     @PostMapping
-    public String registerBoard(@Valid Post post, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            log.error(post.toString());
-            throw new IllegalArgumentException("");
-        }
-        int id = postService.registerPost(post);
+    public String registerBoard(@Valid Post post, BindingResult bindingResult, MultipartFile[] multipartFiles) {
+        int id = postService.registerPost(post, multipartFiles, User.get());
         return "redirect:/java/posts/" + id;
     }
 

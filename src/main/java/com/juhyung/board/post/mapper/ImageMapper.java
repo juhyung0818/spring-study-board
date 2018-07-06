@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Select;
 
 import com.juhyung.board.post.model.Image;
 
+import java.util.List;
+
 @Mapper
 public interface ImageMapper {
     @Insert({"INSERT INTO image "
@@ -39,4 +41,9 @@ public interface ImageMapper {
             + "FROM image "
             + "WHERE id = #{imageId}"})
     Image selectImage(final int imageId);
+
+    @Select({"SELECT id " +
+            "FROM image " +
+            "WHERE post_id = #{postId}"})
+    List<Integer> selectImageIds(final int postId);
 }

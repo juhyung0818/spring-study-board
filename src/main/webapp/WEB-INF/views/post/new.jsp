@@ -12,20 +12,26 @@
 </head>
 <body>
 <div style="width:60%; margin: 0 auto;">
-    <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
-        <label for="image-upload"></label>
-        <input type="file" name="profile" id="image-upload" value="사진 업로드">
-    </form>
+    <div style="border-style: groove;" id="${post.id}" class="post-id">
+        <div class="simple-profile" style="padding-left: 10px; border-bottom: groove;">
+            juhyung
+        </div>
+        <div id="images" style="height: 200px;width: 200px;"></div>
+    </div>
 
-    <div id="images"></div>
 
-    <form action="/java/posts" method="POST">
-        <label for="text">text : </label> <br>
+</div>
+<div style="width:60%; margin: 0 auto;">
+    <form action="/java/posts/" method="post" enctype="multipart/form-data">
+        <input multiple="multiple" type="file" name="multipartFiles" id="image-upload">
         <textarea rows="4" cols="50" id="text" name="text"></textarea>
         <input type="submit" value="등록">
     </form>
+
+
 </div>
 <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+<script src="/resources/js/node_modules/jquery-multifile/jquery.MultiFile.min.js"></script>
 <script>
     var sel_files = [];
     $(document).ready(function() {
@@ -43,7 +49,7 @@
             var reader = new FileReader();
             reader.onload = function(e){
 
-                var img_html = "<img src=" + e.target.result + " width='100px' height='100px'/>";
+                var img_html = "<img src=" + e.target.result + " width='200px' height='200px'/>";
                 $("#images").append(img_html);
             }
             reader.readAsDataURL(f);
@@ -52,3 +58,4 @@
 </script>
 </body>
 </html>
+

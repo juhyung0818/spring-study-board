@@ -20,7 +20,8 @@ public interface PostMapper {
                 "AND post_id = p.id)  " +
             "WHEN 1 THEN TRUE " +
             "ELSE FALSE END AS liked " +
-            "FROM post p ")
+            "FROM post p " +
+            "ORDER BY registerDate desc")
     List<Post> selectPosts(int key);
 
     @Select({"SELECT " +

@@ -19,9 +19,15 @@
             ${post.writer}
         </div>
         <div class="image" style="border-top: groove; border-bottom: groove;">
-            <c:if test="${post.image == null}">
+            <c:if test="${post.imageIds == null}">
                 <img src="/resources/img/default.png" width="200px" height="300px"
                      style="margin-left: auto; margin-right: auto; display: block;">
+            </c:if>
+            <c:if test="${post.imageIds != null}">
+                <c:forEach var="image" items="${post.imageIds}">
+                <img src="/java/images/${image}" width="200px" height="300px"
+                     style="margin-left: auto; margin-right: auto; display: block;">
+                </c:forEach>
             </c:if>
         </div>
 

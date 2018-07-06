@@ -24,9 +24,13 @@
                     ${post.writer}
             </div>
             <div class="image" style="border-top: groove; border-bottom: groove;">
-                <c:if test="${post.image == null}">
+                <c:if test="${empty post.imageIds}">
                     <img src="/resources/img/default.png" width="200px" height="300px"
                          style="margin-left: auto; margin-right: auto; display: block;">
+                </c:if>
+                <c:if test="${not empty post.imageIds}">
+                        <img src="/java/images/${post.imageIds[0]}" width="200px" height="300px"
+                             style="margin-left: auto; margin-right: auto; display: block;">
                 </c:if>
             </div>
             <div>

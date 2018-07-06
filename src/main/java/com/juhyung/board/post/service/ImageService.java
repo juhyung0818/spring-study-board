@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.UUID;
@@ -30,13 +31,7 @@ public class ImageService {
     @Value("${spring.jastgram.file-path}")
     private String BASE_DIR;
 
-    public void upload(final int postId, final MultipartFile[] files) {
-        Optional.ofNullable(files)
-                .filter(file -> file.length > 0)
-                .ifPresent((images) -> save(postId, images));
-    }
-
-    private void save(final int postId, MultipartFile[] files) {
+    private void save(final int postId, final MultipartFile[] files) {
         String path = getPathOrMakeDirectory();
 
         Image image;
@@ -56,6 +51,12 @@ public class ImageService {
             image.setPostId(postId);
             imageMapper.insertImage(image);
         }
+    }
+
+    public void upload(final int postId, final MultipartFile[] files) {
+        Optional.ofNullable(files)
+                .filter(file -> file.length > 0)
+                .ifPresent((images) -> save(postId, images));
     }
 
     private String getPathOrMakeDirectory() {
@@ -111,6 +112,10 @@ public class ImageService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Integer> getImageIds(final int postId) {
+        return imageMapper.selectImageIds(postId);
     }
 
 }

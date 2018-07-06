@@ -10,7 +10,7 @@ import java.util.List;
 public class Post {
     private int id;
     private String writer;
-    private List<Image> image;
+    private List<Integer> imageIds;
     @NotNull
     private String text;
     private LocalDateTime registerDate;
