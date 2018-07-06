@@ -24,3 +24,19 @@ CREATE TABLE image
   content_type varchar(100),
   deleted int
 );
+
+CREATE TABLE user
+(
+  user_key INT AUTO_INCREMENT PRIMARY KEY,
+  id       VARCHAR(100),
+  password VARCHAR(100),
+  name     VARCHAR(100),
+  nick_name VARCHAR(100)
+);
+
+  CREATE TABLE user_follow_user
+  (
+    my_key int,
+    your_key INt,
+    PRIMARY KEY (my_key, your_key)
+  )

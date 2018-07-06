@@ -7,14 +7,14 @@ import lombok.Data;
 @Builder
 public class User {
     private final static User INSTANCE = User.builder()
-            .key(1)
+            .userKey(1)
             .id("juhyung@naver.com")
             .password("123!@#")
             .name("juhyung.yun")
             .nickName("jh")
             .build();
 
-    private int key;
+    private int userKey;
     private String id;
     private String password;
     private String name;
