@@ -4,6 +4,7 @@ package com.juhyung.jstagram.user.login.service;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.juhyung.jstagram.user.mapper.UserMapper;
@@ -12,8 +13,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class LoginService {
-    private static final Pattern EMAIL_REGULAR_EXPRESSION = Pattern.compile("^[_0-9a-zA-Z-]+@[0-9a-zA-Z-]+(.[_0-9a-zA-Z-]+)*$");
+    private static final Pattern EMAIL_REGULAR_EXPRESSION = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     private final UserMapper userMapper;
 
     public User login(final String id, final String password) {
