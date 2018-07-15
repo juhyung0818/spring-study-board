@@ -1,6 +1,7 @@
 package com.juhyung.jstagram.post.controller;
 
 import com.juhyung.jstagram.comment.service.CommentService;
+import com.juhyung.jstagram.common.annotation.Login;
 import com.juhyung.jstagram.post.model.Post;
 import com.juhyung.jstagram.post.service.PostService;
 import com.juhyung.jstagram.user.model.User;
@@ -24,7 +25,12 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping
-    public String getPostsPage(Model model, @CookieValue("USER") String userId) {
+    @Login
+    public String getPostsPage(Model model, User user) {
+        System.out.println(user.toString());
+        System.out.println(user.toString());
+        System.out.println(user.toString());
+        System.out.println(user.toString());
         model.addAttribute("posts", postService.getPosts(User.get()));
         return "/post/list";
     }

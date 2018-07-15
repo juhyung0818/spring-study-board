@@ -28,6 +28,16 @@ public interface UserMapper {
                     ", name AS name " +
                     ", nick_name AS nickName " +
                     "FROM user " +
+                    "WHERE id = #{email}"
+    })
+    User selectUserByEmail(final String email); //특정 user 정보보기
+
+    @Select({
+            "SELECT " +
+                    "user_key AS userKey " +
+                    ", name AS name " +
+                    ", nick_name AS nickName " +
+                    "FROM user " +
                     "WHERE nick_name LIKE CONCAT(#{nickName}, '%')"
     })
     List<User> selectUsers(final String nickName);
