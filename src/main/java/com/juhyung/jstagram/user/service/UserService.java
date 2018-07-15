@@ -1,10 +1,3 @@
-
-/**
- * @(#) UserService.class $version 2018. 07. 05
- *
- * Copyright 2007 NAVER Corp. All rights Reserved.
- * NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
 package com.juhyung.jstagram.user.service;
 
 import com.juhyung.jstagram.user.mapper.UserMapper;
@@ -15,11 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * UserService
- *
- * @author yun.juhyung@nts-corp.com
- */
 @AllArgsConstructor
 @Service
 public class UserService {

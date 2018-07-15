@@ -34,13 +34,13 @@ public interface UserMapper {
 
     @Select({
             "SELECT " +
-                    "user_key AS userKey " +
-                    ", name AS name " +
-                    ", nick_name AS nickName " +
-                    ", password AS password " +
-                    "FROM user " +
-                    "WHERE id = #{id} " +
-                    "AND password = #{password} "
+            "user_key AS userKey " +
+            ", name AS name " +
+            ", nick_name AS nickName " +
+            ", id AS id " +
+            "FROM user " +
+            "WHERE id = #{id} " +
+            "AND password = #{password} "
     })
     User selectLoginUser(@Param("id") final String id, @Param("password") final String password);
 

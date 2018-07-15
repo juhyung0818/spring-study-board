@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
     private static final String JSTAGRAM_LOGIN_KEY = "JSTAGRAM_LOGIN";
     private static final String JSTAGRAM_LOGIN_VALUE = "JSTAGRAM_OK";
+    private static final String JSTAGRAM_USER_KEY = "USER";
 
     private final LoginService loginService;
 
@@ -29,8 +30,8 @@ public class LoginController {
     @PostMapping
     @ResponseBody
     public void login(@RequestBody User user, HttpServletResponse response) {
-        loginService.login(user.getId(), user.getPassword());
-        generateLoginCookie(response);
+        user = loginService.login(user.getId(), user.getPassword());
+        generateLoginCookie(user, response);
     }
 
     @ExceptionHandler(IllegalStateException.class)
@@ -47,9 +48,13 @@ public class LoginController {
         log.error(exception.getMessage() + exception);
     }
 
-    private void generateLoginCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie(JSTAGRAM_LOGIN_KEY, JSTAGRAM_LOGIN_VALUE);
-        cookie.setMaxAge(60 * 60);
-        response.addCookie(cookie);
+    private void generateLoginCookie(User user, HttpServletResponse response) {
+        Cookie loginCookie = new Cookie(JSTAGRAM_LOGIN_KEY, JSTAGRAM_LOGIN_VALUE);
+        loginCookie.setMaxAge(60 * 60);
+        Cookie userCookie = new Cookie(JSTAGRAM_USER_KEY, user.getId());
+        userCookie.setMaxAge(60 * 60);
+
+        response.addCookie(loginCookie);
+        response.addCookie(userCookie);
     }
 }

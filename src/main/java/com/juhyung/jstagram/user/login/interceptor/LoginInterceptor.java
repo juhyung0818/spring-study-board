@@ -1,4 +1,3 @@
-
 package com.juhyung.jstagram.user.login.interceptor;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

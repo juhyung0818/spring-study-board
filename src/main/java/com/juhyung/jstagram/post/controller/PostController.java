@@ -24,7 +24,7 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping
-    public String mainPage(Model model) {
+    public String getPostsPage(Model model, @CookieValue("USER") String userId) {
         model.addAttribute("posts", postService.getPosts(User.get()));
         return "/post/list";
     }
