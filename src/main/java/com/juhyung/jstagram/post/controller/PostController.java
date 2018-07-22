@@ -25,13 +25,8 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping
-    @Login
-    public String getPostsPage(Model model, User user) {
-        System.out.println(user.toString());
-        System.out.println(user.toString());
-        System.out.println(user.toString());
-        System.out.println(user.toString());
-        model.addAttribute("posts", postService.getPosts(User.get()));
+    public String getPostsPage(Model model, @Login User user) {
+        model.addAttribute("posts", postService.getPosts(user));
         return "/post/list";
     }
 

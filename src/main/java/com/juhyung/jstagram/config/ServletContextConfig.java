@@ -2,6 +2,9 @@ package com.juhyung.jstagram.config;
 
 import com.juhyung.jstagram.user.login.interceptor.LoginInterceptor;
 import com.juhyung.jstagram.user.resolver.UserArgumentResolver;
+import com.juhyung.jstagram.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,9 @@ import java.util.List;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.juhyung.jstagram.**.controller"})
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
+
+	@Autowired
+	private ApplicationContext context;
 
 	@Bean
 	public ViewResolver viewResolver() {
@@ -54,6 +60,6 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		argumentResolvers.add(new UserArgumentResolver());
+		argumentResolvers.add(new UserArgumentResolver((UserService) context.getBean("userService")));
 	}
 }
