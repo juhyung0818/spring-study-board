@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,8 +24,11 @@ public class PostService {
     public List<Post> getPosts(User user) {
         List<Post> posts = postMapper.selectPosts(user.getUserKey());
         posts.forEach(post -> post.setImageIds(imageService.getImageIds(post.getId())));
-
         return posts;
+    }
+
+    public List<Post> getPosts(final int userKey) {
+        return postMapper.selectUserPosts(userKey);
     }
 
     public Post getPost(final int id) {
@@ -33,16 +37,12 @@ public class PostService {
         return post;
     }
 
-    public int registerPost(final Post post, final MultipartFile[] multipartFiles, final User user) {
-        Optional.ofNullable(user)
-                .map(User::getName)
-                .ifPresent(name -> post.setWriter(name));
-
+    @Transactional
+    public int registerPost(final Post post, final MultipartFile[] multipartFiles) {
         postMapper.insert(post);
+
         int id = post.getId();
-
         imageService.upload(id, multipartFiles);
-
         return id;
     }
 

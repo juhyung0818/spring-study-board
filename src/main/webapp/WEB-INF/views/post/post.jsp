@@ -60,7 +60,7 @@
                 <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name"><a href="http://creaticode.com/blog">${comment.userName}</a></h6>
+                        <h6 class="comment-name"><a href="http://creaticode.com/blog">${comment.writer}</a></h6>
                         <span>${comment.registerDate}</span>
                         <i class="fa fa-reply"></i>
                         <i class="fa fa-heart"></i>
@@ -77,7 +77,7 @@
                     <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
                     <div class="comment-box">
                         <div class="comment-head">
-                            <h6 class="comment-name"><a href="http://creaticode.com/blog">user name</a></h6>
+                            <h6 class="comment-name"><a href="http://creaticode.com/blog">${comment.writer}</a></h6>
                                 <span>${children.registerDate}</span>
                                 <i class="fa fa-reply"></i>
                                 <i class="fa fa-heart"></i>
@@ -152,7 +152,7 @@
                 <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name"><a href="http://creaticode.com/blog">` + "juhyung" + `</a></h6>
+                        <h6 class="comment-name"><a href="http://creaticode.com/blog">` + comment.writer + `</a></h6>
                         <span>` + comment.registerDate + `</span>
                         <i class="fa fa-reply"></i>
                         <i class="fa fa-heart"></i>
@@ -187,6 +187,7 @@
             data : JSON.stringify(comment),
             contentType : "application/json"
         }).done(function(comment) {
+            console.log(comment);
             content.val("");
             list.append(
                 `<li id=` + comment.id + `>
@@ -194,7 +195,7 @@
                     <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
                     <div class="comment-box">
                         <div class="comment-head">
-                            <h6 class="comment-name"><a href="http://creaticode.com/blog">` + "juhyung" + `</a></h6>
+                            <h6 class="comment-name"><a href="http://creaticode.com/blog">` + comment.writer + `</a></h6>
                             <span>` + comment.registerDate + `</span>
                             <i class="fa fa-reply"></i>
                             <i class="fa fa-heart"></i>

@@ -46,8 +46,9 @@ public class PostController {
     }
 
     @PostMapping
-    public String registerBoard(@Valid Post post, BindingResult bindingResult, MultipartFile[] multipartFiles) {
-        int id = postService.registerPost(post, multipartFiles, User.get());
+    public String registerBoard(@Login User user, @Valid Post post, MultipartFile[] multipartFiles) {
+        post.setWriter(user.getNickName());
+        int id = postService.registerPost(post, multipartFiles);
         return "redirect:/java/posts/" + id;
     }
 
@@ -68,8 +69,8 @@ public class PostController {
 
     @PutMapping("/{id}/like")
     @ResponseBody
-    public void modifyLike(@PathVariable int id) {
-        postService.modifyLikeCount(id, User.get());
+    public void modifyLike(@PathVariable int id, @Login User user) {
+        postService.modifyLikeCount(id, user);
     }
 
 

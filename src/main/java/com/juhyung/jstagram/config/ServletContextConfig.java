@@ -1,7 +1,7 @@
 package com.juhyung.jstagram.config;
 
 import com.juhyung.jstagram.user.login.interceptor.LoginInterceptor;
-import com.juhyung.jstagram.user.resolver.UserArgumentResolver;
+import com.juhyung.jstagram.user.login.resolver.UserArgumentResolver;
 import com.juhyung.jstagram.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

@@ -12,12 +12,7 @@ import java.util.List;
 @RequestMapping("/java/users")
 public class UserController {
     private final UserService userService;
-
-    @GetMapping("/{userKey}")
-    public User getUser(@PathVariable int userKey) {
-        return userService.getUser(userKey);
-    }
-
+    
     @GetMapping({"/search/{nickName}"})
     public List<User> getUsers(@PathVariable String nickName) {
         return userService.getUsers(nickName);

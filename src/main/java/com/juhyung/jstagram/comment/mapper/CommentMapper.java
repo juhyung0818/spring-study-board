@@ -10,27 +10,33 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
     @Select({"SELECT " +
-            "id " +
-            ", post_id" +
-            ", user_key" +
-            ", content" +
-            ", parent" +
-            ", register_date AS registerDate " +
+            "comment.id AS id " +
+            ", comment.post_id AS postId " +
+            ", comment.user_key AS userKey " +
+            ", user.nick_name AS writer " +
+            ", comment.content AS content " +
+            ", comment.parent AS parent " +
+            ", comment.register_date AS registerDate " +
             "FROM comment " +
-            "WHERE post_id = #{id} " +
-            "AND parent = 0 "})
+            "INNER JOIN user " +
+            "ON user.user_key = comment.user_key " +
+            "WHERE comment.post_id = #{id} " +
+            "AND comment.parent = 0 "})
     List<Comment> selectComments(final int id);
 
     @Select({"SELECT " +
-            "id " +
-            ", post_id" +
-            ", user_key" +
-            ", content" +
-            ", parent" +
-            ", register_date AS registerDate " +
+            "comment.id AS id " +
+            ", comment.post_id AS postId " +
+            ", comment.user_key AS userKey " +
+            ", user.nick_name AS writer " +
+            ", comment.content AS content " +
+            ", comment.parent AS parent " +
+            ", comment.register_date AS registerDate " +
             "FROM comment " +
-            "WHERE post_id = #{id} " +
-            "AND parent <> 0 "})
+            "INNER JOIN user " +
+            "ON user.user_key = comment.user_key " +
+            "WHERE comment.post_id = #{id} " +
+            "AND comment.parent <> 0 "})
     List<Comment> selectChildComments(final int id);
 
     @Insert({"INSERT INTO comment (post_id, user_key, content, parent, register_date) " +

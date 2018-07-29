@@ -1,8 +1,8 @@
 package com.juhyung.jstagram.post.service;
 
+import com.juhyung.jstagram.common.builder.Builder;
 import com.juhyung.jstagram.post.mapper.ImageMapper;
 import com.juhyung.jstagram.post.model.Image;
-import com.juhyung.jstagram.common.builder.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,20 +78,12 @@ public class ImageService {
     }
 
     private Image convertFile2Image(MultipartFile file, String path) {
-//        return ImageBuilder.builder()
-//                .contentType(file.getContentType())
-//                .fileName(file.getOriginalFilename())
-//                .fileSize(file.getSize())
-//                .savedFileName(getSaveFileName(path))
-//                .build();
-
-
-    return Builder.of(Image::new)
-            .with(Image::setContentType, file.getContentType())
-            .with(Image::setFileName, file.getName())
-            .with(Image::setFileSize, file.getSize())
-            .with(Image::setSavedFileName, file.getOriginalFilename())
-            .build();
+        return Builder.of(Image::new)
+                .with(Image::setContentType, file.getContentType())
+                .with(Image::setFileName, file.getName())
+                .with(Image::setFileSize, file.getSize())
+                .with(Image::setSavedFileName, file.getOriginalFilename())
+                .build();
     }
 
     private String getSaveFileName(String path) {

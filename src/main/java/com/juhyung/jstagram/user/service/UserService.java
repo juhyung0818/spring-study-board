@@ -21,6 +21,10 @@ public class UserService {
         return userMapper.selectUserByEmail(email);
     }
 
+    public User getUserByNickName(final String nickName) {
+        return userMapper.selectUserByNickName(nickName);
+    }
+
     public List<User> getUsers(@PathVariable String nickName) {
         return userMapper.selectUsers(nickName);
     }

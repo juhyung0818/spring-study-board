@@ -22,7 +22,7 @@ public interface PostMapper {
             "ELSE FALSE END AS liked " +
             "FROM post p " +
             "ORDER BY registerDate desc")
-    List<Post> selectPosts(int key);
+    List<Post> selectPosts(final int key);
 
     @Select({"SELECT " +
             "id AS id " +
@@ -32,6 +32,17 @@ public interface PostMapper {
             ", register_date AS registerDate " +
             " FROM post WHERE id = #{id}"})
     Post selectPost(final int id);
+
+    @Select({"SELECT " +
+            "id AS id " +
+            ", writer AS writer " +
+            ", text AS text " +
+            ", like_count AS likeCount " +
+            ", register_date AS registerDate " +
+            "FROM post " +
+            "WHERE writer = #{userKey} " +
+            "ORDER BY registerDate desc"})
+    List<Post> selectUserPosts(final int userKey);
 
     @Insert({"INSERT INTO post (writer, text, register_date, like_count) " +
             "VALUES (#{writer}, #{text}, NOW(), 0)"})
